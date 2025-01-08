@@ -36,3 +36,9 @@ variable "tags" {
     Project     = "eks-cluster"
   }
 }
+
+variable "region_name" {
+  description = "region name"
+  type        = string
+  default     = "us_east_1"
+}
