@@ -11,14 +11,14 @@ module "vpc" {
 
 # IAM Module
 module "iam" {
-  source          = "./module/iam"
+  source          = "../module/iam"
   cluster_name    = var.cluster_name
   tags            = var.tags
 }
 
 # EKS Module
 module "eks" {
-  source           = "./module/eks"
+  source           = "../module/eks"
   cluster_name     = var.cluster_name
   cluster_role_arn = module.iam.cluster_role_arn
   node_role_arn    = module.iam.node_role_arn
