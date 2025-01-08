@@ -1,7 +1,7 @@
 
 # VPC Module
 module "vpc" {
-  source             = "./modules/vpc"
+  source             = "./module/vpc"
   cidr_block         = var.vpc_cidr
   public_subnet_cidrs = var.public_subnet_cidrs
   private_subnet_cidrs = var.private_subnet_cidrs
@@ -11,14 +11,14 @@ module "vpc" {
 
 # IAM Module
 module "iam" {
-  source          = "./modules/iam"
+  source          = "./module/iam"
   cluster_name    = var.cluster_name
   tags            = var.tags
 }
 
 # EKS Module
 module "eks" {
-  source           = "./modules/eks"
+  source           = "./module/eks"
   cluster_name     = var.cluster_name
   cluster_role_arn = module.iam.cluster_role_arn
   node_role_arn    = module.iam.node_role_arn
