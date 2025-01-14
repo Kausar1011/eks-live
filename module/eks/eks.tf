@@ -1,4 +1,4 @@
-# EKS Cluster
+/* # EKS Cluster
 resource "aws_eks_cluster" "eks_cluster" {
   name     = var.cluster_name
   role_arn = var.cluster_role_arn
@@ -6,6 +6,18 @@ resource "aws_eks_cluster" "eks_cluster" {
   vpc_config {
     subnet_ids         = var.subnet_ids
     security_group_ids = [aws_security_group.eks_sg.id] # Reference security group
+  }
+}
+*/
+
+# module/eks/eks.tf
+
+resource "aws_eks_cluster" "eks_cluster" {
+  name     = var.cluster_name
+  role_arn = var.cluster_role_arn
+  vpc_config {
+    subnet_ids = var.subnet_ids
+    security_group_ids = [var.cluster_sg_id]  # Reference the security group from the VPC module
   }
 }
 
