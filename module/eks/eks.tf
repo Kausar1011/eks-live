@@ -21,25 +21,54 @@ resource "aws_eks_cluster" "eks_cluster" {
   }
 }
 
-# Security Group for EKS Cluster
-resource "aws_security_group" "eks_cluster_sg" {
-name = "eks_cluster_sg"
-vpc_id      = var.vpc_id
+# Security group for the EKS cluster
+resource "aws_security_group" "eks_sg" {
+  name        = "${var.cluster_name}-eks-sg"
+  description = "Security group for EKS Cluster"
+  vpc_id      = var.vpc_id
 
   ingress {
-    description = "Allow worker nodes to communicate with the control plane"
-    from_port   = 443
-    to_port     = 443
+    from_port   = 0
+    to_port     = 65535
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"] # Adjust CIDR as per your requirements
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   egress {
-    description = "Allow all outbound traffic"
     from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
+    to_port     = 65535
+    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "${var.cluster_name}-eks-sg"
+  }
+}
+
+
+# Security group for the EKS worker nodes
+resource "aws_security_group" "eks_worker_sg" {
+  name        = "${var.cluster_name}-worker-sg"
+  description = "Security group for EKS Worker Nodes"
+  vpc_id      = var.vpc_id
+
+  ingress {
+    from_port   = 0
+    to_port     = 65535
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 65535
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "${var.cluster_name}-worker-sg"
   }
 }
 
