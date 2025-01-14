@@ -11,6 +11,30 @@ resource "aws_vpc" "main" {
   tags = merge(var.tags, { Name = "${var.cluster_name}-vpc" })
 }
 
+# Create Security Group for the VPC (EKS Cluster)
+resource "aws_security_group" "eks_cluster_sg" {
+  name_prefix = "${var.cluster_name}-eks-cluster-sg"
+  vpc_id      = aws_vpc.main.id
+
+  ingress {
+    description = "Allow worker nodes to communicate with the control plane"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]  # Update CIDR block as required
+  }
+
+  egress {
+    description = "Allow all outbound traffic"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = merge(var.tags, { Name = "${var.cluster_name}-eks-cluster-sg" })
+}
+
 # Create public subnets
 resource "aws_subnet" "public" {
   count = length(var.public_subnet_cidrs)
@@ -93,4 +117,28 @@ resource "aws_route_table_association" "private" {
   count          = length(var.private_subnet_cidrs)
   subnet_id      = aws_subnet.private[count.index].id
   route_table_id = aws_route_table.private.id
+}
+
+# Create Security Group for Worker Nodes
+resource "aws_security_group" "eks_worker_sg" {
+  name_prefix = "${var.cluster_name}-worker-sg"
+  vpc_id      = aws_vpc.main.id
+
+  ingress {
+    description = "Allow worker nodes to communicate with each other"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]  # Update CIDR block as required
+  }
+
+  egress {
+    description = "Allow all outbound traffic"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = merge(var.tags, { Name = "${var.cluster_name}-worker-sg" })
 }
