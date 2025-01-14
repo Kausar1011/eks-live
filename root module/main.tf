@@ -26,3 +26,11 @@ module "eks" {
   cluster_sg_id    = module.vpc.eks_cluster_sg_id
   tags             = var.tags
 }
+
+module "vpc" {
+  source = "./module/vpc"
+}
+
+output "eks_cluster_sg_id" {
+  value = module.vpc.eks_cluster_sg_id
+}
