@@ -52,3 +52,8 @@ variable "min_size" {
   type        = number
   default     = 1
 }
+
+variable "cluster_sg_id" {
+  description = "The security group ID for the EKS cluster"
+  type        = string
+}
