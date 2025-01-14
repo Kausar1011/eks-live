@@ -1,111 +1,96 @@
-resource "aws_vpc" "eks_vpc" {
+provider "aws" {
+  region = var.region
+}
+
+# Create VPC
+resource "aws_vpc" "main" {
   cidr_block           = var.cidr_block
   enable_dns_support   = true
   enable_dns_hostnames = true
-  tags                 = { Name = "${var.cluster_name}-vpc" }
+
+  tags = merge(var.tags, { Name = "${var.cluster_name}-vpc" })
 }
 
-data "aws_availability_zones" "available" {}
-
+# Create public subnets
 resource "aws_subnet" "public" {
-  count                   = length(var.public_subnet_cidrs)
+  count = length(var.public_subnet_cidrs)
+
   vpc_id                  = aws_vpc.main.id
   cidr_block              = var.public_subnet_cidrs[count.index]
   map_public_ip_on_launch = true
-  tags = merge(var.tags, { Name = "${var.cluster_name}-public-subnet-${count.index}" })
+  availability_zone       = data.aws_availability_zones.available.names[count.index]
+
+  tags = merge(var.tags, { Name = "${var.cluster_name}-public-subnet-${count.index + 1}" })
 }
 
+# Create private subnets
 resource "aws_subnet" "private" {
-  count             = length(var.private_subnet_cidrs)
+  count = length(var.private_subnet_cidrs)
+
   vpc_id            = aws_vpc.main.id
   cidr_block        = var.private_subnet_cidrs[count.index]
-  tags = merge(var.tags, { Name = "${var.cluster_name}-private-subnet-${count.index}" })
+  availability_zone = data.aws_availability_zones.available.names[count.index]
+
+  tags = merge(var.tags, { Name = "${var.cluster_name}-private-subnet-${count.index + 1}" })
 }
 
-resource "aws_security_group" "eks_cluster_sg" {
-  name        = "${var.cluster_name}-eks-cluster-sg"
-  description = "Security group for EKS cluster"
-  vpc_id      = aws_vpc.main.id
+# Get Availability Zones
+data "aws_availability_zones" "available" {}
 
-  ingress {
-    description = "Allow worker nodes to communicate with the EKS cluster"
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+# Create Internet Gateway for public access
+resource "aws_internet_gateway" "main" {
+  vpc_id = aws_vpc.main.id
+
+  tags = merge(var.tags, { Name = "${var.cluster_name}-igw" })
+}
+
+# Create Route Table for public subnets
+resource "aws_route_table" "public" {
+  vpc_id = aws_vpc.main.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.main.id
   }
 
-  egress {
-    description = "Allow all outbound traffic"
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  tags = merge(var.tags, { Name = "${var.cluster_name}-eks-cluster-sg" })
+  tags = merge(var.tags, { Name = "${var.cluster_name}-public-route-table" })
 }
 
-# Create an Internet Gateway
-resource "aws_internet_gateway" "igw" {
-  vpc_id = aws_vpc.main_vpc.id
-  tags = {
-    Name = "Main-IGW"
-  }
+# Associate Route Table with Public Subnets
+resource "aws_route_table_association" "public" {
+  count          = length(var.public_subnet_cidrs)
+  subnet_id      = aws_subnet.public[count.index].id
+  route_table_id = aws_route_table.public.id
 }
 
-# Create a Public Route Table
-resource "aws_route_table" "public_rt" {
-  vpc_id = aws_vpc.main_vpc.id
-  tags = {
-    Name = "Public-RT"
-  }
-}
-
-# Associate the Internet Gateway with the Public Route Table
-resource "aws_route" "public_route" {
-  route_table_id         = aws_route_table.public_rt.id
-  destination_cidr_block = "0.0.0.0/0"
-  gateway_id             = aws_internet_gateway.igw.id
-}
-
-# Associate Subnet with Route Table
-resource "aws_route_table_association" "public_rt_association" {
-  subnet_id      = aws_subnet.public_subnet.id
-  route_table_id = aws_route_table.public_rt.id
-}
-
-# Create a NAT Gateway for Private Subnet
-resource "aws_eip" "nat_eip" {
+# Create NAT Gateway for private subnets
+resource "aws_eip" "nat" {
   vpc = true
+  tags = merge(var.tags, { Name = "${var.cluster_name}-eip-nat" })
 }
 
-resource "aws_nat_gateway" "nat" {
-  allocation_id = aws_eip.nat_eip.id
-  subnet_id     = aws_subnet.public_subnet.id
-  tags = {
-    Name = "NAT-Gateway"
+resource "aws_nat_gateway" "main" {
+  allocation_id = aws_eip.nat.id
+  subnet_id     = aws_subnet.public[0].id
+
+  tags = merge(var.tags, { Name = "${var.cluster_name}-nat-gateway" })
+}
+
+# Create Route Table for private subnets
+resource "aws_route_table" "private" {
+  vpc_id = aws_vpc.main.id
+
+  route {
+    cidr_block     = "0.0.0.0/0"
+    nat_gateway_id = aws_nat_gateway.main.id
   }
+
+  tags = merge(var.tags, { Name = "${var.cluster_name}-private-route-table" })
 }
 
-# Create a Private Route Table
-resource "aws_route_table" "private_rt" {
-  vpc_id = aws_vpc.main_vpc.id
-  tags = {
-    Name = "Private-RT"
-  }
+# Associate Route Table with Private Subnets
+resource "aws_route_table_association" "private" {
+  count          = length(var.private_subnet_cidrs)
+  subnet_id      = aws_subnet.private[count.index].id
+  route_table_id = aws_route_table.private.id
 }
-
-# Add a route to NAT Gateway in Private Route Table
-resource "aws_route" "private_route" {
-  route_table_id         = aws_route_table.private_rt.id
-  destination_cidr_block = "0.0.0.0/0"
-  nat_gateway_id         = aws_nat_gateway.nat.id
-}
-
-# Associate Private Subnet with Private Route Table
-resource "aws_route_table_association" "private_rt_association" {
-  subnet_id      = aws_subnet.private_subnet.id
-  route_table_id = aws_route_table.private_rt.id
-}
-
