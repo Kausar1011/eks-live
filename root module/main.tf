@@ -34,6 +34,5 @@ module "eks" {
   node_role_arn    = module.iam.node_role_arn
   subnet_ids       = module.vpc.private_subnet_ids
   cluster_sg_id    = module.vpc.eks_sg_id  # Pass the security group ID
-  tags             = var.tags
 }
 
