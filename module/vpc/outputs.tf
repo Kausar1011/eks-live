@@ -22,3 +22,7 @@ output "nat_gateway_id" {
   description = "The ID of the NAT Gateway"
   value       = aws_nat_gateway.main.id
 }
+
+output "eks_cluster_sg_id" {
+  value = aws_security_group.eks_sg.id
+}
