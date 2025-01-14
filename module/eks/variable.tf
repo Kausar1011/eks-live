@@ -7,7 +7,7 @@ variable "cluster_name" {
 variable "vpc_id" {
   description = "VPC ID for the EKS cluster"
   type        = string
-  default     = "vpc-03287220535c90cd1" # Updated VPC ID
+  default     = "vpc-0e55bae2861c33828" # Updated VPC ID
 }
 
 variable "cluster_role_arn" {
