@@ -13,3 +13,7 @@ output "private_subnet_ids" {
 output "eks_cluster_name" {
   value = module.eks.cluster_name
 }
+
+output "eks_cluster_sg_id" {
+  value = aws_security_group.eks_sg.id
+}
