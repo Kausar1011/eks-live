@@ -7,8 +7,6 @@ resource "aws_eks_cluster" "eks_cluster" {
     subnet_ids         = var.subnet_ids
     security_group_ids = [aws_security_group.eks_sg.id] # Reference security group
   }
-
-  tags = var.tags
 }
 
 # Security Group for EKS Cluster
@@ -32,7 +30,6 @@ resource "aws_security_group" "eks_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
-  
 
 # EKS Node Group
 resource "aws_eks_node_group" "eks_node_group" {
@@ -45,8 +42,4 @@ resource "aws_eks_node_group" "eks_node_group" {
     max_size     = var.max_size
     min_size     = var.min_size
   }
-
-  tags = merge(var.tags, {
-    Name = "${var.cluster_name}-node-group"
-  })
 }
