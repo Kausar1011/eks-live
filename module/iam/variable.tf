@@ -1,4 +1,3 @@
-
 variable "region" {
   description = "AWS region"
   type        = string
@@ -17,4 +16,18 @@ variable "tags" {
     Environment = "dev"
     Owner       = "admin"
   }
+}
+
+# Real ARN for the EKS cluster role
+variable "cluster_role_arn" {
+  description = "ARN of the IAM role for the EKS cluster"
+  type        = string
+  default     = "arn:aws:iam::123456789012:role/cluster-role"
+}
+
+# Real ARN for the EKS worker node role
+variable "node_role_arn" {
+  description = "ARN of the IAM role for the EKS worker nodes"
+  type        = string
+  default     = "arn:aws:iam::123456789012:role/worker-node"
 }
