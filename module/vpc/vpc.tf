@@ -119,7 +119,6 @@ resource "aws_route_table_association" "private" {
   route_table_id = aws_route_table.private.id
 }
 
-# Create Security Group for Worker Nodes
 resource "aws_security_group" "eks_worker_sg" {
   name_prefix = "${var.cluster_name}-worker-sg"
   vpc_id      = aws_vpc.main.id
@@ -142,3 +141,4 @@ resource "aws_security_group" "eks_worker_sg" {
 
   tags = merge(var.tags, { Name = "${var.cluster_name}-worker-sg" })
 }
+
