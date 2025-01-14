@@ -30,8 +30,8 @@ module "eks" {
 module "eks" {
   source           = "../module/eks"
   cluster_name     = var.cluster_name
-  cluster_role_arn = module.iam.cluster_role_arn
-  node_role_arn    = module.iam.node_role_arn
+  cluster_role_arn = "arn:aws:iam::123456789012:role/cluster-role"
+  node_role_arn    = "arn:aws:iam::123456789012:role/worker-node "
   subnet_ids       = module.vpc.private_subnet_ids
   cluster_sg_id    = module.vpc.eks_sg_id  # Pass the security group ID
 }
