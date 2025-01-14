@@ -15,5 +15,5 @@ output "eks_cluster_name" {
 }
 
 output "eks_cluster_sg_id" {
-  value = aws_security_group.eks_cluster_sg.id
+  value = module.aws_security_group.eks_cluster_sg.id
 }
