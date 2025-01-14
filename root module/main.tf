@@ -26,6 +26,4 @@ module "eks" {
   tags             = var.tags
 }
 
-output "eks_cluster_sg_id" {
-  value = module.vpc.eks_cluster_sg_id
-}
+
