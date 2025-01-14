@@ -5,6 +5,7 @@ module "vpc" {
   public_subnet_cidrs = var.public_subnet_cidrs
   private_subnet_cidrs = var.private_subnet_cidrs
   cluster_name       = var.cluster_name
+  cluster_sg_id    = module.vpc.eks_cluster_sg_id
   tags               = var.tags
 }
 
