@@ -1,4 +1,3 @@
-
 # VPC Module
 module "vpc" {
   source             = "../module/vpc"
@@ -25,10 +24,6 @@ module "eks" {
   subnet_ids       = module.vpc.private_subnet_ids
   cluster_sg_id    = module.vpc.eks_cluster_sg_id
   tags             = var.tags
-}
-
-module "vpc" {
-  source = "./module/vpc"
 }
 
 output "eks_cluster_sg_id" {
