@@ -15,7 +15,7 @@ module "iam" {
   tags            = var.tags
 }
 
-# EKS Module
+/* # EKS Module
 module "eks" {
   source           = "../module/eks"
   cluster_name     = var.cluster_name
@@ -25,5 +25,15 @@ module "eks" {
   cluster_sg_id    = module.vpc.eks_cluster_sg_id
   tags             = var.tags
 }
+*/
 
+module "eks" {
+  source           = "../module/eks"
+  cluster_name     = var.cluster_name
+  cluster_role_arn = module.iam.cluster_role_arn
+  node_role_arn    = module.iam.node_role_arn
+  subnet_ids       = module.vpc.private_subnet_ids
+  cluster_sg_id    = module.vpc.eks_sg_id  # Pass the security group ID
+  tags             = var.tags
+}
 
