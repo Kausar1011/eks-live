@@ -15,5 +15,5 @@ output "eks_cluster_name" {
 }
 
 output "eks_cluster_sg_id" {
-  value = module.vpc.eks_cluster_sg_id
+  value = module.vpc.eks_cluster_sg_id 
 }
