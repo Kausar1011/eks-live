@@ -12,7 +12,6 @@ resource "aws_eks_cluster" "eks_cluster" {
 # Security Group for EKS Cluster
 resource "aws_security_group" "eks_cluster_sg" {
 name = "eks_cluster_sg"
-name_prefix = "${var.cluster_name}-sg"
 vpc_id      = var.vpc_id
 
   ingress {
