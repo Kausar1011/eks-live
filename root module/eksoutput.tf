@@ -2,12 +2,12 @@
 
 output "eks_cluster_role_arn" {
   description = "The ARN of the EKS Cluster IAM Role"
-  value       = module.iam.aws_cluster_role_arn
+  value       = module.iam.eks_cluster_role_arn
 }
 
 output "eks_worker_node_role_arn" {
   description = "The ARN of the EKS Worker Node IAM Role"
-  value       = module.iam.node_role_arn
+  value       = module.eks.node_role_arn
 }
 
 output "eks_cluster_role_name" {
