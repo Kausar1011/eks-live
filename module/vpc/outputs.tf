@@ -39,3 +39,15 @@ output "subnet_ids" {
   description = "The IDs of the subnets"
   value       = aws_subnet.subnet[*].id
 }
+
+
+# Output for Public Subnet IDs
+output "public_subnet_ids" {
+  value = aws_subnet.public[*].id
+}
+
+# Output for Private Subnet IDs
+output "private_subnet_ids" {
+  value = aws_subnet.private[*].id
+}
+
