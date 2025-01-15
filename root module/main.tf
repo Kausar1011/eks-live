@@ -11,7 +11,7 @@ module "vpc" {
 # IAM Module
 module "iam" {
   source          = "../module/iam"
-  cluster_name    = var.cluster_name
+  cluster_name    = var.aws_cluster_name
   tags            = var.tags
 }
 
