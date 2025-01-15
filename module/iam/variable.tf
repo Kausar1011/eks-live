@@ -18,7 +18,7 @@ variable "tags" {
   }
 }
 
-# Real ARN for the EKS cluster role
+/* # Real ARN for the EKS cluster role
 variable "cluster_role_arn" {
   description = "ARN of the IAM role for the EKS cluster"
   type        = string
@@ -31,3 +31,4 @@ variable "node_role_arn" {
   type        = string
   default     = "arn:aws:iam::123456789012:role/worker-node"
 }
+*/
