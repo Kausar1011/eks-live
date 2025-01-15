@@ -27,11 +27,6 @@ output "eks_cluster_sg_id" {
   value = aws_security_group.eks_sg.id
 }
 
-output "eks_cluster_sg_id" {
-  description = "The security group ID for the EKS cluster"
-  value       = aws_security_group.eks_sg.id
-}
-
 # Outputs for subnet ids, VPC CIDR block, and Availability Zones
 output "subnet_ids" {
   description = "The IDs of the subnets"
