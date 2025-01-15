@@ -26,3 +26,19 @@ output "nat_gateway_id" {
 output "eks_cluster_sg_id" {
   value = aws_security_group.eks_sg.id
 }
+
+# Outputs for subnet ids, VPC CIDR block, and Availability Zones
+output "subnet_ids" {
+  description = "The IDs of the subnets"
+  value       = aws_subnet.subnet.*.id
+}
+
+output "vpc_cidr_block" {
+  description = "The CIDR block of the VPC"
+  value       = aws_vpc.main.cidr_block
+}
+
+output "vpc_azs" {
+  description = "The availability zones for the VPC"
+  value       = aws_vpc.main.availability_zones
+}
