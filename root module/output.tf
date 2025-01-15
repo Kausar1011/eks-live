@@ -22,7 +22,7 @@ output "cluster_role_arn" {
   value = module.iam.cluster_role_arn 
 }
 
-output "cluster_role_name" {
+output "aws_cluster_role_name" {
   value = aws_iam_role.cluster_role.name
 }
 
