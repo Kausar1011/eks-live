@@ -18,15 +18,15 @@ output "eks_cluster_sg_id" {
   value = module.vpc.eks_cluster_sg_id 
 }
 
-output "eks_cluster_role_arn" {
+output "cluster_role_arn" {
   value = module.iam.eks_cluster_role_arn
 }
 
-output "eks_cluster_role_name" {
+output "cluster_role_name" {
   value = module.iam.eks_cluster_role_name
 }
 
-output "eks_worker_node_role_arn" {
+output "worker_node_role_arn" {
   value = module.iam.eks_worker_node_role_arn
 }
 
