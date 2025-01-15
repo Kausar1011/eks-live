@@ -1,3 +1,4 @@
+
 # IAM Role for EKS Cluster
 resource "aws_iam_role" "cluster_role" {
   name = "${var.cluster_name}-cluster-role"
@@ -62,4 +63,25 @@ resource "aws_iam_role_policy_attachment" "eks_cni_policy_attachment" {
 resource "aws_iam_role_policy_attachment" "cloudwatch_policy_attachment" {
   role       = aws_iam_role.worker_node.name
   policy_arn = "arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"
+}
+
+# Add outputs for role ARN and role names
+output "eks_cluster_role_arn" {
+  description = "The ARN of the EKS Cluster IAM Role"
+  value       = aws_iam_role.cluster_role.arn
+}
+
+output "eks_worker_node_role_arn" {
+  description = "The ARN of the EKS Worker Node IAM Role"
+  value       = aws_iam_role.worker_node.arn
+}
+
+output "eks_cluster_role_name" {
+  description = "The name of the EKS Cluster IAM Role"
+  value       = aws_iam_role.cluster_role.name
+}
+
+output "eks_worker_node_role_name" {
+  description = "The name of the EKS Worker Node IAM Role"
+  value       = aws_iam_role.worker_node.name
 }
