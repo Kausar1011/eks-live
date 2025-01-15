@@ -34,8 +34,8 @@ output "eks_worker_node_role_name" {
   value = module.iam.worker_node_role_name
 }
 
-output "cluster_policy_attachment_arn" {
-  value = module.iam.cluster_policy_attachment_arn
+output "cluster_policy_attachment_arn" {  
+  value = module.iam.eks_cluster_policy_attachment_arn
 }
 
 output "vpc_controller_policy_attachment_arn" {
