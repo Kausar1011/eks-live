@@ -38,5 +38,6 @@ output "vpc_cidr_block" {
 
 output "vpc_azs" {
   description = "The availability zones for the VPC"
-  value       = aws_vpc.main.availability_zones
+  value       = data.aws_availability_zones.available.names
 }
+
