@@ -27,7 +27,7 @@ output "nat_gateway_id" {
 
 output "subnet_ids" {
   description = "The IDs of the subnets"
-  value       = aws_subnet.subnet[*].id
+  value       = aws_subnet.subnet.id
 }
 
 
