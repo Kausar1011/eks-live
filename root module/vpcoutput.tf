@@ -15,5 +15,5 @@ output "vpc_azs" {
 
 output "eks_cluster_sg_id" {
   description = "The security group ID for the EKS cluster"
-  value       = module.vpc.eks_cluster_sg_id
+  value       = module.vpc.eks_sg_id
 }
