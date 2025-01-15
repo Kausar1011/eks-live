@@ -17,3 +17,8 @@ output "eks_cluster_sg_id" {
   description = "The security group ID for the EKS cluster"
   value       = module.vpc.eks_sg_id
 }
+
+output "subnet_ids" {
+  description = "The IDs of the subnets"
+  value       = module.vpc.subnet_ids
+}
