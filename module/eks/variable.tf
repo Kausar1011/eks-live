@@ -28,10 +28,10 @@ variable "subnet_ids" {
   description = "List of subnet IDs where the EKS cluster and nodes will be deployed"
   type        = list(string)
   default     = [
-    "subnet-0fabdd1c0b94ffda4", # Private Subnet 1
-    "subnet-0a82926b9ef267085", # Private Subnet 2
-    "subnet-04a5e5cc6a928c795", # Public Subnet 1
-    "subnet-072992dc1ce65933e"  # Public Subnet 2
+    "subnet-00b0d57a5060ca18b", # Private Subnet 1
+    "subnet-099e8998056ba8621", # Private Subnet 2
+    "subnet-0cfcad7ef16ac2119", # Public Subnet 1
+    "subnet-0be56ae579bc29d36"  # Public Subnet 2
   ]
 }
 
