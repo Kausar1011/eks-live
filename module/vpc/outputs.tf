@@ -25,12 +25,6 @@ output "nat_gateway_id" {
 
 # Outputs for subnet ids, VPC CIDR block, and Availability Zones
 
-output "subnet_ids" {
-  description = "The IDs of the subnets"
-  value       = aws_subnet.subnet.id
-}
-
-
 output "vpc_cidr_block" {
   description = "The CIDR block of the VPC"
   value       = aws_vpc.main.cidr_block
@@ -41,3 +35,7 @@ output "vpc_azs" {
   value       = data.aws_availability_zones.available.names
 }
 
+output "subnet_ids" {
+  description = "The IDs of the subnets"
+  value       = aws_subnet.subnet[*].id
+}
