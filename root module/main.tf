@@ -4,7 +4,7 @@ module "vpc" {
   cidr_block         = var.vpc_cidr
   public_subnet_cidrs = var.public_subnet_cidrs
   private_subnet_cidrs = var.private_subnet_cidrs
-  cluster_name       = var.cluster_name
+  cluster_name       = var.aws_cluster_name
   tags               = var.tags
 }
 
