@@ -22,7 +22,7 @@ variable "private_subnet_cidrs" {
   default     = ["10.0.3.0/24", "10.0.4.0/24"]
 }
 
-variable "cluster_name" {
+variable "aws_cluster_name" {
   description = "EKS cluster name"
   type        = string
   default     = "my-eks-cluster"
