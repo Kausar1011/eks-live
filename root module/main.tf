@@ -29,7 +29,7 @@ module "eks" {
 
 module "eks" {
   source           = "../module/eks"
-  cluster_name     = var.cluster_name
+  cluster_name     = var.aws_cluster_name
   cluster_role_arn = "arn:aws:iam::123456789012:role/cluster-role"
   node_role_arn    = "arn:aws:iam::123456789012:role/worker-node "
   subnet_ids       = module.vpc.private_subnet_ids
