@@ -22,3 +22,16 @@ output "subnet_ids" {
   description = "The IDs of the subnets"
   value       = module.vpc.subnet_ids
 }
+
+# outputs.tf in the root module
+
+# Output the Public Subnet IDs
+output "subnet_ids" {
+  value = module.vpc.public_subnet_ids
+}
+# outputs.tf in the root module
+
+# Output the Private Subnet IDs
+output "subnet_ids" {
+  value = module.vpc.private_subnet_ids
+}
