@@ -1,12 +1,5 @@
-# vpcoutput.tf
-
-output "vpc_id" {
-  description = "The ID of the VPC"
-  value       = module.vpc.vpc_id
-}
-
 output "subnet_ids" {
-  description = "The IDs of the subnets in the VPC"
+  description = "The IDs of the subnets"
   value       = module.vpc.subnet_ids
 }
 
@@ -20,3 +13,7 @@ output "vpc_azs" {
   value       = module.vpc.vpc_azs
 }
 
+output "eks_cluster_sg_id" {
+  description = "The security group ID for the EKS cluster"
+  value       = module.vpc.eks_cluster_sg_id
+}
