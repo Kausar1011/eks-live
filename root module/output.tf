@@ -10,15 +10,15 @@ output "private_subnet_ids" {
   value = module.vpc.private_subnet_ids
 }
 
-output "eks_cluster_name" {
+output "aws_eks_cluster_name" {
   value = module.eks.cluster_name
 }
 
-output "eks_cluster_sg_id" {
+output "aws_eks_cluster_sg_id" {
   value = module.vpc.eks_cluster_sg_id 
 }
 
-output "cluster_role_arn" {
+output "aws_cluster_role_arn" {
   value = module.iam.cluster_role_arn 
 }
 
