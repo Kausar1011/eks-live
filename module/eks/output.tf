@@ -13,7 +13,3 @@ output "security_group_id" {
   value       = aws_security_group.eks_sg.id
 }
 
-output "eks_cluster_sg_id" {
-  description = "The ID of the EKS cluster security group"
-  value       = aws_security_group.eks_sg.id
-}
