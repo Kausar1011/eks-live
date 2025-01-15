@@ -23,7 +23,7 @@ output "aws_cluster_role_arn" {
 }
 
 output "aws_cluster_role_name" {
-  value = aws_iam_role.cluster_role.name
+  value = aws_iam_role.aws_cluster_role.name
 }
 
 output "worker_node_role_arn" {
