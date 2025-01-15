@@ -19,7 +19,7 @@ output "eks_cluster_sg_id" {
 }
 
 output "cluster_role_arn" {
-  value = module.iam.eks_cluster_role_arn
+  value = module.iam.cluster_role_arn
 }
 
 output "cluster_role_name" {
