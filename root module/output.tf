@@ -23,31 +23,31 @@ output "cluster_role_arn" {
 }
 
 output "cluster_role_name" {
-  value = module.iam.eks_cluster_role_name
+  value = module.iam.cluster_role_name
 }
 
 output "worker_node_role_arn" {
-  value = module.iam.eks_worker_node_role_arn
+  value = module.iam.worker_node_role_arn
 }
 
 output "eks_worker_node_role_name" {
-  value = module.iam.eks_worker_node_role_name
+  value = module.iam.worker_node_role_name
 }
 
-output "eks_cluster_policy_attachment_arn" {
-  value = module.iam.eks_cluster_policy_attachment_arn
+output "cluster_policy_attachment_arn" {
+  value = module.iam.cluster_policy_attachment_arn
 }
 
-output "eks_vpc_controller_policy_attachment_arn" {
-  value = module.iam.eks_vpc_controller_policy_attachment_arn
+output "vpc_controller_policy_attachment_arn" {
+  value = module.iam.vpc_controller_policy_attachment_arn
 }
 
-output "eks_worker_node_policy_attachment_arn" {
-  value = module.iam.eks_worker_node_policy_attachment_arn
+output "worker_node_policy_attachment_arn" {
+  value = module.iam.worker_node_policy_attachment_arn
 }
 
-output "eks_cni_policy_attachment_arn" {
-  value = module.iam.eks_cni_policy_attachment_arn
+output "cni_policy_attachment_arn" {
+  value = module.iam.cni_policy_attachment_arn
 }
 
 output "cloudwatch_policy_attachment_arn" {
